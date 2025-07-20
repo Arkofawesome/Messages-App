@@ -17,14 +17,19 @@ public class MessagePannel extends JPanel implements ActionListener {
     ArrayList<JLabel> messages = new ArrayList<>();
     JTextField usernameEnter = new JTextField(10);
     JTextField messageField = new JTextField(25);
-    String username;
-    String target;
+    static String username;
+    static String target;
+    String currentMessage = "";
+    boolean newMessage = false;
+
+
     MessagePannel() {
-        this.addKeyListener(new MyKeyAdapter());
+//        this.addKeyListener(new MyKeyAdapter());
         this.setLayout(null);
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         start();
     }
+
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -35,6 +40,17 @@ public class MessagePannel extends JPanel implements ActionListener {
     }
     public void start() {
         initAccount();
+    }
+
+//    public void setCurrentMessage(String currentMessage) {
+//        this.currentMessage = currentMessage;
+//    }
+
+    public void setMessageBool(boolean bool) {
+        newMessage = bool;
+    }
+    public String getMessage() {
+        return currentMessage;
     }
 
     public void initAccount() {
@@ -88,6 +104,8 @@ public class MessagePannel extends JPanel implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JLabel msg = new JLabel(messageField.getText());
+                currentMessage = messageField.getText();
+                newMessage = true;
 //                System.out.println("msg: " + messageField.getText());
                 messageField.setText("");
                 msg.setFont(new Font("Arial", Font.BOLD, 16));
@@ -123,14 +141,14 @@ public class MessagePannel extends JPanel implements ActionListener {
         repaint();
     }
 
-    public class MyKeyAdapter extends KeyAdapter {
-        @Override
-        public void keyPressed(KeyEvent e){
-            System.out.println("Hello!");
-            // Checking if the enter key has been pressed
-
-
-
-        }
-    }
+//    public class MyKeyAdapter extends KeyAdapter {
+//        @Override
+//        public void keyPressed(KeyEvent e){
+//            System.out.println("Hello!");
+//            // Checking if the enter key has been pressed
+//
+//
+//
+//        }
+//    }
 }

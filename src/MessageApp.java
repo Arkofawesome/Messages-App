@@ -1,9 +1,8 @@
 import javax.swing.*;
 
 public class MessageApp extends JFrame {
-    MessagePannel messagePannel = new MessagePannel();
 
-    MessageApp() {
+    MessageApp(MessagePannel messagePannel) {
         this.add(messagePannel);
         this.setTitle("Messages");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

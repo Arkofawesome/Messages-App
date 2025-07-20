@@ -1,6 +1,6 @@
 # Multi-Client Direct Messaging App (Java)
 
-A simple, multi-threaded socket-based application that enables real-time direct messaging between multiple clients. Built in Java using basic networking and threading concepts.
+A simple, multithreaded socket-based application that enables real-time direct messaging between multiple clients. Built in Java using basic networking and threading concepts.
 
 ---
 
