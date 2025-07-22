@@ -20,12 +20,19 @@ public class ClientHandler implements Runnable{
             this.targetUsername = bufferedReader.readLine();
 
             clientHandlers.add(this);
-            broadcastMessage("SERVER: " + clientUsername + " has entered the chat! Targeting: " + targetUsername);
+            broadcastMessage("SERVER: " + clientUsername + " has entered the chat!");
 
         }
         catch (IOException e) {
             closeEverything(socket, bufferedReader, bufferedWriter);
         }
+    }
+
+    public void updateClients() {
+
+    }
+    public String getClientUsername() {
+        return clientUsername;
     }
 
     @Override

@@ -39,7 +39,7 @@ public class Client {
 
             while (socket.isConnected()) {
                 if (messagePannel.newMessage) {
-                    System.out.println("THE WHILE LOOP WORKS!!!");
+//                    System.out.println("THE WHILE LOOP WORKS!!!");
                     bufferedWriter.write(username + ": " + messagePannel.getMessage());
                     bufferedWriter.newLine();
                     bufferedWriter.flush();
@@ -63,6 +63,7 @@ public class Client {
                 while (socket.isConnected()) {
                     try {
                         msgFromGroupChat = bufferedReader.readLine();
+                        messagePannel.receiveMessage(msgFromGroupChat);
                         System.out.println(msgFromGroupChat);
                     }
                     catch (IOException e) {

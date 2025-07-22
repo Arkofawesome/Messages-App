@@ -12,8 +12,8 @@ public class MessagePannel extends JPanel implements ActionListener {
     final int MSG_BOX_HEIGHT = 50;
     final int NAME_BOX_WIDTH = 200;
     final int NAME_BOX_HEIGHT = 50;
-    int lastMessageHeight = 0;
-    ArrayList<ClientHandler> Clients = new ArrayList<>();
+    int lastMessageHeight = 50;
+    ArrayList<ClientHandler> clients = new ArrayList<>();
     ArrayList<JLabel> messages = new ArrayList<>();
     JTextField usernameEnter = new JTextField(10);
     JTextField messageField = new JTextField(25);
@@ -40,8 +40,32 @@ public class MessagePannel extends JPanel implements ActionListener {
     }
     public void start() {
         initAccount();
+
     }
 
+    public void drawClients() {
+        clients = ClientHandler.clientHandlers;
+        System.out.println(clients.size());
+        int x = 0;
+        int y = 100;
+        for (int i = 0; i < clients.size() ; i++) {
+            JButton button;
+            if (!(x + CONTACT_WIDTH <= SCREEN_WIDTH)) {
+                x = 0;
+                y+= CONTACT_HEIGHT;
+            }
+            button = new JButton(clients.get(i).getClientUsername());
+            button.setBounds(x,y,CONTACT_WIDTH,CONTACT_HEIGHT);
+            button.setVisible(true);
+            int finalI = i;
+            button.addActionListener(event -> {
+                System.out.println(clients.get(finalI).getClientUsername());
+            });
+            add(button);
+            x+=CONTACT_WIDTH;
+
+        }
+    }
 //    public void setCurrentMessage(String currentMessage) {
 //        this.currentMessage = currentMessage;
 //    }
@@ -94,6 +118,7 @@ public class MessagePannel extends JPanel implements ActionListener {
     }
 
     public void msg_Box() {
+        drawClients();
         messageField.setBounds(SCREEN_WIDTH / 2 - MSG_BOX_WIDTH / 2, 500, MSG_BOX_WIDTH, MSG_BOX_HEIGHT);
         messageField.setVisible(true);
         messageField.setFont(new Font("Arial", Font.BOLD, 16));
@@ -112,7 +137,7 @@ public class MessagePannel extends JPanel implements ActionListener {
 
                 // Get Dimensions of the msg
                 Dimension size = msg.getPreferredSize();
-                msg.setBounds(0, lastMessageHeight, (int) size.getWidth(), (int) size.getHeight());
+                msg.setBounds(SCREEN_WIDTH - (int) size.getWidth() - 10, lastMessageHeight, (int) size.getWidth(), (int) size.getHeight());
                 lastMessageHeight += size.height + 10;
 
                 msg.setVisible(true);
@@ -128,7 +153,7 @@ public class MessagePannel extends JPanel implements ActionListener {
 
         // Get Dimensions of the msg
         Dimension size = msg.getPreferredSize();
-        msg.setBounds(SCREEN_WIDTH - (int) size.getWidth(), lastMessageHeight, (int) size.getWidth(), (int) size.getHeight());
+        msg.setBounds(10, lastMessageHeight, (int) size.getWidth(), (int) size.getHeight());
         lastMessageHeight += size.height + 10;
 
         msg.setVisible(true);
