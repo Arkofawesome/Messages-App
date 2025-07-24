@@ -95,11 +95,13 @@ public class Client {
         messagePannel = new MessagePannel();
         new MessageApp(messagePannel);
         while (username == null || username.equals("")) {
-            username = MessagePannel.username;
+//            System.out.println("username is " +username);
+            username = messagePannel.username;
         }
         System.out.println("Username is: " + username);
         while (target == null || target.equals("")) {
-            target = MessagePannel.target;
+//            System.out.println("target is " +target);
+            target = messagePannel.target;
         }
         System.out.println("Target is: " + target);
     }
@@ -110,7 +112,8 @@ public class Client {
 //        System.out.println("Who is Your message directed to: ");
 //        String target = scanner.nextLine();
         getInfo();
-
+        System.out.println(username);
+        System.out.println(target);
         Socket socket = new Socket("localhost", 1234);
         Client client = new Client(socket, username, target);
         client.listenForMessage();
