@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 
 public class MessagePannel extends JPanel implements ActionListener {
@@ -12,9 +13,11 @@ public class MessagePannel extends JPanel implements ActionListener {
     final int MSG_BOX_HEIGHT = 50;
     final int NAME_BOX_WIDTH = 200;
     final int NAME_BOX_HEIGHT = 50;
-    int lastMessageHeight = 50;
+    final int ARCWIDTH = 20;
+    final int ARCHEIGHT = 20;
+    int lastMessageHeight = 75;
     ArrayList<ClientHandler> clients = new ArrayList<>();
-    ArrayList<JLabel> messages = new ArrayList<>();
+    ArrayList<MessageBubble> messages = new ArrayList<>();
     JTextField usernameEnter = new JTextField(10);
     JTextField messageField = new JTextField(25);
     static String username;
@@ -36,7 +39,14 @@ public class MessagePannel extends JPanel implements ActionListener {
         draw(g);
     }
     public void draw(Graphics g){
+        if (target != null && !target.equals("")) {
+            g.drawLine(0,50,SCREEN_WIDTH,50);
+            for (MessageBubble message : messages) {
+                g.setColor(message.color);
+                g.fillRoundRect(message.x,message.y,message.width,message.height,message.arcWidth,message.arcHeight);
+            }
 
+        }
     }
     public void start() {
         initAccount();
@@ -77,6 +87,17 @@ public class MessagePannel extends JPanel implements ActionListener {
         return currentMessage;
     }
 
+    public void makeUsername() {
+        JLabel text = new JLabel(target);
+        text.setFont(new Font("Arial", Font.BOLD, 16));
+
+        // Get Dimensions of the msg
+        Dimension size = text.getPreferredSize();
+        text.setBounds(SCREEN_WIDTH / 2 - (int) size.getWidth() / 2,10, (int) size.getWidth(), (int) size.getHeight());
+        System.out.println(size.getWidth());
+        add(text);
+        text.setVisible(true);
+    }
     public void initAccount() {
         //JLabel to direct the user
         JLabel usernameText = new JLabel("Enter your username: ");
@@ -111,14 +132,14 @@ public class MessagePannel extends JPanel implements ActionListener {
 
                     }
                 }
+                makeUsername();
                 repaint();
 
             }
         });
     }
-
     public void msg_Box() {
-        drawClients();
+//        drawClients();
         messageField.setBounds(SCREEN_WIDTH / 2 - MSG_BOX_WIDTH / 2, 500, MSG_BOX_WIDTH, MSG_BOX_HEIGHT);
         messageField.setVisible(true);
         messageField.setFont(new Font("Arial", Font.BOLD, 16));
@@ -137,7 +158,11 @@ public class MessagePannel extends JPanel implements ActionListener {
 
                 // Get Dimensions of the msg
                 Dimension size = msg.getPreferredSize();
-                msg.setBounds(SCREEN_WIDTH - (int) size.getWidth() - 10, lastMessageHeight, (int) size.getWidth(), (int) size.getHeight());
+                msg.setBounds(SCREEN_WIDTH - (int) size.getWidth() - 25, lastMessageHeight, (int) size.getWidth(), (int) size.getHeight());
+
+                messages.add(new MessageBubble(SCREEN_WIDTH - (int) size.getWidth() - 35, lastMessageHeight - 5, (int) size.getWidth() +20, (int) size.getHeight() + 8,
+                        ARCWIDTH, ARCHEIGHT, new Color(3, 162, 233)));
+
                 lastMessageHeight += size.height + 10;
 
                 msg.setVisible(true);
@@ -153,7 +178,11 @@ public class MessagePannel extends JPanel implements ActionListener {
 
         // Get Dimensions of the msg
         Dimension size = msg.getPreferredSize();
-        msg.setBounds(10, lastMessageHeight, (int) size.getWidth(), (int) size.getHeight());
+        msg.setBounds(35, lastMessageHeight, (int) size.getWidth(), (int) size.getHeight());
+
+        messages.add(new MessageBubble(25, lastMessageHeight - 5, (int) size.getWidth() + 20, (int) size.getHeight() + 8,
+                ARCWIDTH, ARCHEIGHT, Color.GRAY));
+
         lastMessageHeight += size.height + 10;
 
         msg.setVisible(true);
@@ -177,3 +206,5 @@ public class MessagePannel extends JPanel implements ActionListener {
 //        }
 //    }
 }
+
+

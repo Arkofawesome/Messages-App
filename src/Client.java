@@ -94,13 +94,16 @@ public class Client {
     public static void getInfo() {
         messagePannel = new MessagePannel();
         new MessageApp(messagePannel);
+        final Object lock = new Object();
         while (username == null || username.equals("")) {
 //            System.out.println("username is " +username);
+            messagePannel.repaint();
             username = messagePannel.username;
         }
         System.out.println("Username is: " + username);
         while (target == null || target.equals("")) {
 //            System.out.println("target is " +target);
+            messagePannel.repaint();
             target = messagePannel.target;
         }
         System.out.println("Target is: " + target);
